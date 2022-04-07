@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "homepage": "https://dhunanyan.github.io/memories-client/",
+  "homepage": "https://dhunanyan.github.io/memories-client",
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
