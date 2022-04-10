@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { signin, signup } from "../../actions/auth.actions";
+
 import CustomInput from "../custom-input/custom-input.component";
 import { GoogleLogin } from "react-google-login";
 
@@ -20,19 +22,35 @@ import { BsGoogle as GoogleIcon } from "react-icons/bs";
 
 import useStyles from "./auth.styles";
 
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
 const Auth = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+  const [formData, setFormData] = useState(initialState);
 
-  const handleSubmit = () => {
-    return 0;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (isSignup) {
+      dispatch(signup(formData, navigate));
+    } else {
+      dispatch(signin(formData, navigate));
+    }
   };
 
-  const handleChange = () => {
-    return 0;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleShowPassword = () => {
@@ -78,12 +96,14 @@ const Auth = () => {
                   <CustomInput
                     name="firstName"
                     label="First Name"
+                    value={formData.firstName}
                     handleChange={handleChange}
                     half
                   />
                   <CustomInput
                     name="lastName"
                     label="Last Name"
+                    value={formData.lastName}
                     handleChange={handleChange}
                     half
                   />
@@ -92,12 +112,14 @@ const Auth = () => {
               <CustomInput
                 name="email"
                 label="Email Address"
+                value={formData.email}
                 handleChange={handleChange}
                 type="email"
               />
               <CustomInput
                 name="password"
                 label="Password"
+                value={formData.password}
                 handleChange={handleChange}
                 type={showPassword ? "text" : "password"}
                 handleShowPassword={handleShowPassword}
@@ -106,6 +128,7 @@ const Auth = () => {
                 <CustomInput
                   name="confirmPassword"
                   label="Repeat Password"
+                  value={formData.confirmPassword}
                   handleChange={handleChange}
                   type="password"
                 />
@@ -138,7 +161,7 @@ const Auth = () => {
                   }
                   variant="contained"
                 >
-                  Googl Sign in
+                  Google Sign in
                 </Button>
               )}
             />
