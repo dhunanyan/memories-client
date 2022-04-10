@@ -5,3 +5,8 @@ export const PostActionTypes = {
   DELETE: "DELETE",
   LIKE: "LIKE",
 };
+
+export const AuthActionTypes = {
+  AUTH: "AUTH",
+  LOGOUT: "LOGOUT",
+};
