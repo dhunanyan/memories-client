@@ -40,7 +40,6 @@ const Auth = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     if (isSignup) {
       dispatch(signup(formData, navigate));
     } else {
@@ -58,6 +57,7 @@ const Auth = () => {
   };
 
   const switchMode = () => {
+    setFormData(formData);
     setIsSignup((isSignup) => !isSignup);
     setShowPassword(false);
   };
@@ -67,7 +67,7 @@ const Auth = () => {
     const token = res?.tokenId;
 
     try {
-      dispatch({ type: "AUTH", payload: { result, token } });
+      dispatch({ type: "AUTH", data: { result, token } });
       navigate("/");
     } catch (err) {
       console.log(err);
